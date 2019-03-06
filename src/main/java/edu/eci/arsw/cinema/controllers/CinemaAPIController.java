@@ -98,6 +98,7 @@ public class CinemaAPIController {
 
 	
 	@RequestMapping(value = "/cinemas/{name}", method = RequestMethod.PUT)
+	
 	public ResponseEntity<?> setCinemaFuction(@PathVariable String name , @RequestBody CinemaFunction cinemaFunction ) {
 		try {
 			System.out.println("Entremos");
