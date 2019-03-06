@@ -80,4 +80,9 @@ public class CinemaServices {
         return filtro.filteringByAvailability(cinema, cinemasName, date, emptySeats);
     }
 
+	public void setCinemaFuction(String name, CinemaFunction cinemaFunction) {
+		cps.setCinemaFuction(name,cinemaFunction);
+		
+	}
+
 }
