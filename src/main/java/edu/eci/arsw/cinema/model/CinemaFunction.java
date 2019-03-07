@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  *
@@ -18,36 +19,57 @@ import java.util.List;
 public class CinemaFunction {
     
     private Movie movie;
-    private List<List<Boolean>> seats=new ArrayList<>();
+    private List<List<AtomicBoolean>> seats=new ArrayList<>();
     private String date;
     
+    
+    /*private class Silla {
+    	boolean tomada;
+    	public void set(boolean t) {
+    		this.tomada = t;
+    	}
+    	
+    	public boolean get() {
+    		return this.tomada;
+    	}
+    }*/
+    
     public CinemaFunction(){}
+    
+    /*private void spm(int i, int j) {
+    	//Silla silla = seats.get(i).get(j);
+    	synchronized(silla) {
+    		if (silla.get() == false) {
+    			System.out.println("Pude cogerla!!!");
+    			silla.set(true);
+    		}
+    	}
+    }*/
     
     public CinemaFunction(Movie movie, String date){
         this.movie=movie;
         this.date=date;
         //7x12
         for (int i=0;i<7;i++){
-            List<Boolean> row= new ArrayList<>(Arrays.asList(new Boolean[12]));
-            Collections.fill(row, Boolean.TRUE);
+            List<AtomicBoolean> row= new ArrayList<>(Arrays.asList(new AtomicBoolean[12]));
+            Collections.fill(row, new AtomicBoolean(true));
             this.seats.add(row);
         }
     }
     
     public void buyTicket(int row,int col) throws CinemaException{
         if (seats.get(row).get(col).equals(true)){
-            seats.get(row).set(col,Boolean.FALSE);
-        }
-        else{
+            seats.get(row).set(col, new AtomicBoolean(false));
+        }else{
             throw new CinemaException("Seat booked");
         }
     }
     
     public int getEmptySeats(){
         int countEmptySeat = 0;
-        for(List<Boolean> listaBoolean  : seats){
-            for(Boolean emptySeat  : listaBoolean){
-                if(emptySeat){
+        for(List<AtomicBoolean> listaBoolean  : seats){
+            for(AtomicBoolean emptySeat  : listaBoolean){
+                if(emptySeat.get()){
                     countEmptySeat++;
                 }
             }            
@@ -55,9 +77,7 @@ public class CinemaFunction {
         return countEmptySeat;
     }
     
-    
-    
-    public List<List<Boolean>> getSeats() {
+    public List<List<AtomicBoolean>> getSeats() {
         return this.seats;
     }
     
@@ -65,7 +85,7 @@ public class CinemaFunction {
         return movie;
     }
 
-    public void setMovie(Movie movie) {
+    synchronized public void setMovie(Movie movie) {
         this.movie = movie;
     }
 
@@ -73,7 +93,7 @@ public class CinemaFunction {
         return date;
     }
 
-    public void setDate(String date) {
+    synchronized public void setDate(String date) {
         this.date = date;
     }
     

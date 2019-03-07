@@ -30,7 +30,7 @@ public class CinemaServices {
 	
     @Autowired
     @Qualifier("inMemoryCinemaPersistence")
-    CinemaPersitence cps;
+    CinemaPersitence cps;  
     
     @Autowired 
     @Qualifier("filteredByGender")

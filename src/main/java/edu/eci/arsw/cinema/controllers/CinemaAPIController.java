@@ -41,7 +41,7 @@ public class CinemaAPIController {
 	CinemaServices cinemaServices;
 
 	@GetMapping("/cinemas")
-	public ResponseEntity<?> getAllCinemas() {
+	public ResponseEntity<?> getAllCinemas(){
 		try {
 			return new ResponseEntity<>(cinemaServices.getAllCinemas(), HttpStatus.ACCEPTED);
 		} catch (Exception ex) {
@@ -97,8 +97,7 @@ public class CinemaAPIController {
 	}
 
 	
-	@RequestMapping(value = "/cinemas/{name}", method = RequestMethod.PUT)
-	
+	@RequestMapping(value = "/cinemas/{name}", method = RequestMethod.PUT)	
 	public ResponseEntity<?> setCinemaFuction(@PathVariable String name , @RequestBody CinemaFunction cinemaFunction ) {
 		try {
 			System.out.println("Entremos");
